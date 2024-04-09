@@ -6,9 +6,12 @@ setTimeout(() => {
     // trElementsがNodeListであるかを確認し、それに基づいて処理を行う
     if (trEvenElements.length > 0) {
         trEvenElements.forEach(tr => {
-            // 各<tr>要素の子要素である6番目の<td>要素を取得
+            // 各<tr>要素の子要素である5番目の<td>要素を取得
             const targetTd = tr.querySelectorAll('td')[4];
-            console.log(targetTd)
+            // console.log(targetTd)
+
+            //各<tr>要素の子要素である5番目の<td>要素を取得
+            const submittedTd = tr.querySelectorAll('td')[5];
 
             // <td>要素のテキストから年月日時間情報を抽出してコンソールに表示
             function extractDateTimeFromText(text) {
@@ -38,9 +41,23 @@ setTimeout(() => {
                     const currentDate = new Date(extractedDateTime);
                     if (currentDate <= threeDaysAgo) {
                         // 3日前の場合、背景色を黒に変更する
+                        targetTd.style.backgroundColor = "#feff00";
+                    }
+                }
+                if (extractedDateTime) {
+                    console.log(extractedDateTime);
+                    // 現在の日付と3日前であるかを比較する
+                    const twoDaysAgo = new Date();
+                    twoDaysAgo.setDate(twoDaysAgo.getDate() + 1);
+                    const currentDate = new Date(extractedDateTime);
+                    if (currentDate <= twoDaysAgo) {
+                        // 3日前の場合、背景色を黒に変更する
                         targetTd.style.backgroundColor = "#fcc";
                     }
                 }
+            }
+            if(submittedTd && submittedTd.textContent == "提出済"){
+                submittedTd.style.backgroundColor = "#66e5ff"
             }
         });
     } else {
