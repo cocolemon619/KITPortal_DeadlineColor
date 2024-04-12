@@ -1,4 +1,56 @@
 setTimeout(() => {
+    // 新しいdiv要素を作成
+    var newCalendar = document.createElement("div");
+
+    // 新しいdiv要素にid属性を設定
+    newCalendar.id = "calendar";
+
+    //追加先の指定
+    let appndToDiv = document.getElementById("DashboardMyListSearch");
+
+    // 要素に追加
+    appndToDiv.appendChild(newCalendar);
+
+    const weeks = ['日', '月', '火', '水', '木', '金', '土']
+    const date = new Date()
+    const year = date.getFullYear()
+    const month = date.getMonth() + 1
+    const startDate = new Date(year, month - 1, 1) // 月の最初の日を取得
+    const endDate = new Date(year, month, 0) // 月の最後の日を取得
+    const endDayCount = endDate.getDate() // 月の末日
+    const startDay = startDate.getDay() // 月の最初の日の曜日を取得
+    let dayCount = 1 // 日にちのカウント
+    let calendarHtml = '' // HTMLを組み立てる変数
+
+    calendarHtml += '<p>' + year + '/' + month + '</p>'
+    calendarHtml += '<table>'
+
+    // 曜日の行を作成
+    for (let i = 0; i < weeks.length; i++) {
+        calendarHtml += '<td>' + weeks[i] + '</td>'
+    }
+
+    for (let w = 0; w < 6; w++) {
+        calendarHtml += '<tr>'
+
+        for (let d = 0; d < 7; d++) {
+            if (w == 0 && d < startDay) {
+                // 1行目で1日の曜日の前
+                calendarHtml += '<td></td>'
+            } else if (dayCount > endDayCount) {
+                // 末尾の日数を超えた
+                calendarHtml += '<td></td>'
+            } else {
+                calendarHtml += '<td>' + dayCount + '</td>'
+                dayCount++
+            }
+        }
+        calendarHtml += '</tr>'
+    }
+    calendarHtml += '</table>'
+
+    document.getElementById('calendar').innerHTML = calendarHtml
+
     // ページ上の even または odd クラスが付与された <tr> 要素を取得
     let trEvenElements = document.querySelectorAll('tr.even, tr.odd');
     console.log(trEvenElements);
@@ -56,7 +108,7 @@ setTimeout(() => {
                     }
                 }
             }
-            if(submittedTd && submittedTd.textContent == "提出済"){
+            if (submittedTd && submittedTd.textContent == "提出済") {
                 submittedTd.style.backgroundColor = "#66e5ff"
             }
         });
